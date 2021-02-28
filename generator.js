@@ -21,6 +21,7 @@ const generator = async (sitemap) => {
     hostname = '',
     optionsMapPerDocumentType = {},
     documentTypes = [],
+    fileName = 'sitemap.xml',
     publicPath = 'public',
     sitemapConfig
   } = sitemap;
@@ -57,13 +58,23 @@ const generator = async (sitemap) => {
 
   const sitemapData = await streamToPromise(sitemapStream);
 
-  if (!fs.existsSync(path.join(__dirname, publicPath))) {
-    fs.mkdirSync(path.join(__dirname, publicPath), { recursive: true });
+  let basePath = resolvePublicPath(publicPath)
+
+  if (!fs.existsSync(path.join(basePath))) {
+    fs.mkdirSync(path.join(basePath), { recursive: true });
   }
 
-  fs.writeFileSync(path.join(__dirname, `${publicPath}/sitemap.xml`), sitemapData, "utf-8");
+  fs.writeFileSync(path.join(basePath, fileName), sitemapData, "utf-8");
 
   return sitemapData;
+}
+
+function resolvePublicPath(dir) {
+  if (dir === 'public') {
+    dir = path.join(__dirname, dir);
+  }
+
+  return dir;
 }
 
 module.exports = generator;

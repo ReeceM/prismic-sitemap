@@ -136,6 +136,7 @@ The sitemap object is made up of the following:
     linkResolver = Function,
     apiEndpoint = String,
     hostname = String,
+    fileName = String,
     optionsMapPerDocumentType = Object, /** @see https://github.com/ekalinin/sitemap.js/blob/master/api.md#sitemap-item-options */
     documentTypes = Array,
     sitemapConfig = Object /** @see https://github.com/ekalinin/sitemap.js#options-you-can-pass */
@@ -148,6 +149,7 @@ The sitemap object is made up of the following:
 |linkResolver|function|`doc => {return `${doc.uid}`;}`| This is the Prismic.io link resolver, this could be custom, or used from the prismic-configuration files.|
 |apiEndpoint|string|`'https://some-repository-on-prismic.cdn.prismic.io/api/v2'`| This is the URL of your Prismic repository, the API version of it.|
 |hostname|string|`'http://example.com/'`| The hostname of your Vercel/Next.js application|
+|fileName|string|`'sitemap.xml'`| The name of the sitemap, it is always placed inside public|
 |optionsMapPerDocumentType|object|`{ page: { changefreq: "monthly", priority: 1 }, }`| The options for the documents that are indexed, this can also have other options, found at [https://github.com/ekalinin/sitemap.js/blob/master/api.md#sitemap-item-options](https://github.com/ekalinin/sitemap.js/blob/master/api.md#sitemap-item-options)|
 |documentTypes|array|`['homepage', 'page', 'pricing', 'legal']`||
 |sitemapConfig|object|| see [https://github.com/ekalinin/sitemap.js#options-you-can-pass](https://github.com/ekalinin/sitemap.js#options-you-can-pass)|

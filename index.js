@@ -13,6 +13,10 @@ module.exports = (nextConfig) => ({
     if (isServer) {
       console.log('[Sitemap Generator]: Generating Sitemap');
 
+      if (typeof sitemap.publicPath === 'undefined') {
+        sitemap.publicPath = path.join(options.dir, 'public');
+      }
+
       generator(sitemap);
 
       return config;

@@ -1,6 +1,6 @@
 {
   "name": "@reecem/prismic-sitemap",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sitemap Generator for Prismic and Next.js",
   "keywords": [
     "javascript",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "sitemap": "node ./index.js",
-    "test": "jest"
+    "test": "TEST_REPOSITORY=https://hbar.cdn.prismic.io/api/v2 jest"
   },
   "author": "@ReeceM",
   "license": "MIT"
