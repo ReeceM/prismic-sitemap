@@ -1,4 +1,8 @@
-# Prismic Sitemap Generator
+# Prismic Sitemap Generator 
+[![Node.js CI](https://github.com/ReeceM/prismic-sitemap/actions/workflows/node.js.yml/badge.svg)](https://github.com/ReeceM/prismic-sitemap/actions/workflows/node.js.yml)
+[![Package Deploy](https://github.com/ReeceM/prismic-sitemap/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ReeceM/prismic-sitemap/actions/workflows/npm-publish.yml)
+[![GitHub license](https://img.shields.io/github/license/ReeceM/prismic-sitemap?style=flat)](https://github.com/ReeceM/prismic-sitemap/blob/master/LICENSE)
+![npm](https://img.shields.io/npm/v/reecem/prismic-sitemap)
 
 A sitemap generator for next.js websites based on the pages in your Prismic.io backed Next.js application.
 
