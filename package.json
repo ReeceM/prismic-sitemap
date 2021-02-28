@@ -1,0 +1,29 @@
+{
+  "name": "@reecem/prismic-sitemap",
+  "version": "0.0.1",
+  "description": "Sitemap Generator for Prismic and Next.js",
+  "keywords": [
+    "javascript",
+    "nextjs",
+    "prismic.io",
+    "sitemap",
+    "sitemap generator"
+  ],
+  "repository": {
+    "url": "https://github.com/reecem/prismic-sitemap"
+  },
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "next": "^10.0.7",
+    "prismic-javascript": "^3.0.2",
+    "sitemap": "^6.4.0"
+  },
+  "scripts": {
+    "sitemap": "node ./index.js",
+    "test": "jest"
+  },
+  "author": "@ReeceM",
+  "license": "MIT"
+}
