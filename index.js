@@ -1,4 +1,5 @@
 const generator = require('./generator');
+const path = require('path');
 
 module.exports = (nextConfig) => ({
   ...nextConfig,

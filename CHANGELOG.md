@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2021-03-01
+
+First kind of functional version of the package and it also has the ability to have
+### Added
+- Integration tests and improved unit test
+
+### Fixed
+- The `path` package was missing inside the `index.js` next config file
+
 ## [0.0.2] - 2021-03-01
 
 ### Added
@@ -22,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial File
 - Docs and such
 
-[Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.0.2...HEAD
+[Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.1.0...HEAD
+[0.0.2]: https://github.com/reecem/prismic-sitemap/tag/v0.1.0
 [0.0.2]: https://github.com/reecem/prismic-sitemap/tag/v0.0.2
 [0.0.1]: https://github.com/reecem/prismic-sitemap/tag/v0.0.1
