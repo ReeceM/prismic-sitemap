@@ -24,7 +24,7 @@ beforeAll(async () => {
   appPort = server.address().port;
 });
 
-afterAll(() => server?.close());
+afterAll(() => server ? server.close() : null);
 
 describe('Using Sitemap Generator', () => {
   describe('visiting page', () => {
