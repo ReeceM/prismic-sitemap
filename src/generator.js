@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const Prismic = require("prismic-javascript");
 const { SitemapStream, streamToPromise } = require('sitemap');
+const emitter = require('./emitter');
 
 /**
  * Generates a sitemap
@@ -58,15 +59,12 @@ const generator = async (sitemap) => {
 
   const sitemapData = await streamToPromise(sitemapStream);
 
-  let basePath = resolvePublicPath(publicPath)
-
-  if (!fs.existsSync(path.join(basePath))) {
-    fs.mkdirSync(path.join(basePath), { recursive: true });
-  }
-
-  fs.writeFileSync(path.join(basePath, fileName), sitemapData, "utf-8");
-
-  return sitemapData;
+  return emitter.init({
+    fileName: fileName,
+    data: sitemapData
+  }).fileWriter(publicPath)
+    ? sitemapData
+    : null;
 }
 
 function resolvePublicPath(dir) {
