@@ -1,5 +1,6 @@
-const generator = require('./generator');
+const generator = require('./src/generator');
 const path = require('path');
+const emitter = require('./src/emitter');
 
 module.exports = (nextConfig) => ({
   ...nextConfig,
@@ -10,7 +11,6 @@ module.exports = (nextConfig) => ({
       config: { sitemap = {} }
     } = options;
 
-
     if (isServer) {
       console.log('[Sitemap Generator]: Generating Sitemap');
 
@@ -18,9 +18,17 @@ module.exports = (nextConfig) => ({
         sitemap.publicPath = path.join(options.dir, 'public');
       }
 
-      generator(sitemap);
+      sitemap.emitter = emitter.init({
+        fileName: sitemap.fileName,
+      })
 
-      return config;
+      let sitemapData = generator(sitemap);
+
+      try {
+        sitemap.emitter.emit(sitemapData)(sitemap.publicPath);
+      } catch (error) {
+        console.error("[Sitemap Generator] Unable to write sitemap to storage. Build will continue")
+      }
     }
 
     if (typeof nextConfig.webpack === 'function') {
