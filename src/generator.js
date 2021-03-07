@@ -1,5 +1,3 @@
-const path = require("path");
-const fs = require("fs");
 const Prismic = require("prismic-javascript");
 const { SitemapStream, streamToPromise } = require('sitemap');
 
@@ -21,8 +19,6 @@ const generator = async (sitemap) => {
     hostname = '',
     optionsMapPerDocumentType = {},
     documentTypes = [],
-    fileName = 'sitemap.xml',
-    publicPath = 'public',
     sitemapConfig
   } = sitemap;
 
@@ -56,25 +52,7 @@ const generator = async (sitemap) => {
 
   sitemapStream.end();
 
-  const sitemapData = await streamToPromise(sitemapStream);
-
-  let basePath = resolvePublicPath(publicPath)
-
-  if (!fs.existsSync(path.join(basePath))) {
-    fs.mkdirSync(path.join(basePath), { recursive: true });
-  }
-
-  fs.writeFileSync(path.join(basePath, fileName), sitemapData, "utf-8");
-
-  return sitemapData;
-}
-
-function resolvePublicPath(dir) {
-  if (dir === 'public') {
-    dir = path.join(__dirname, dir);
-  }
-
-  return dir;
+  return await streamToPromise(sitemapStream);
 }
 
 module.exports = generator;

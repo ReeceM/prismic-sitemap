@@ -5,7 +5,7 @@ let fs = require('fs');
 let path = require('path');
 
 jest.mock('fs');
-let generator = require('../generator');
+let generator = require('../src/generator');
 
 const sitemapConfig = {
   linkResolver: doc => {
@@ -29,26 +29,33 @@ describe('tests for generator.js', () => {
     await generator(sitemapConfig);
   });
 
-  it('should check if exists', async () => {
+  it('should return a sitemap with valid data', async () => {
+    let sitemapData = await generator(sitemapConfig);
 
-    expect(jest.spyOn(fs, "existsSync"))
-      .toHaveBeenCalledWith(path.join(__dirname, "../public"));
-  });
+    expect(sitemapData)
+      .toEqual(require('./buffer-example'))
+  })
 
-  it('should have called 1 time', () => {
+  // it('should check if exists', async () => {
 
-    expect(jest.spyOn(fs, 'writeFileSync'))
-      .toHaveBeenCalledTimes(1);
-  });
+  //   expect(jest.spyOn(fs, "existsSync"))
+  //     .toHaveBeenCalledWith(path.join(__dirname, "../public"));
+  // });
 
-  it('file write should have been called with ...', () => {
+  // it('should have called 1 time', () => {
 
-    expect(jest.spyOn(fs, 'writeFileSync')).toHaveBeenCalledWith(
-      path.join(__dirname, "../public/sitemap.xml"),
-      require('./buffer-example'),
-      "utf-8"
-    );
-  });
+  //   expect(jest.spyOn(fs, 'writeFileSync'))
+  //     .toHaveBeenCalledTimes(1);
+  // });
+
+  // it('file write should have been called with ...', () => {
+
+  //   expect(jest.spyOn(fs, 'writeFileSync')).toHaveBeenCalledWith(
+  //     path.join(__dirname, "../public/sitemap.xml"),
+  //     require('./buffer-example'),
+  //     "utf-8"
+  //   );
+  // });
 });
 
 describe('generator errors', () => {
