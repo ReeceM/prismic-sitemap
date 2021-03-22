@@ -1,6 +1,6 @@
 {
   "name": "@reecem/prismic-sitemap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sitemap Generator for Prismic and Next.js",
   "keywords": [
     "javascript",
@@ -13,16 +13,17 @@
     "url": "https://github.com/reecem/prismic-sitemap"
   },
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "prismic-javascript": "^3.0.2",
+    "sitemap": "^6.4.0"
+  },
   "devDependencies": {
     "cross-spawn": "^7.0.3",
     "jest": "^26.6.3",
     "next": "^10.0.7",
     "node-fetch": "^2.6.1",
-    "prismic-javascript": "^3.0.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "sitemap": "^6.4.0"
+    "react-dom": "^17.0.1"
   },
   "scripts": {
     "sitemap": "node ./index.js",
