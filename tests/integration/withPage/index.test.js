@@ -15,12 +15,13 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 beforeAll(async () => {
   jest.resetModules();
   await nextBuild(appDir);
-  app = nextServer({
+
+  server = await startApp({
     dir: appDir,
     dev: false,
     quiet: true
   });
-  server = await startApp(app);
+
   appPort = server.address().port;
 });
 
