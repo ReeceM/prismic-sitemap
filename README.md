@@ -3,7 +3,6 @@
 [![Package Deploy](https://github.com/ReeceM/prismic-sitemap/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ReeceM/prismic-sitemap/actions/workflows/npm-publish.yml)
 [![GitHub license](https://img.shields.io/github/license/ReeceM/prismic-sitemap?style=flat)](https://github.com/ReeceM/prismic-sitemap/blob/master/LICENSE)
 [![npm](https://img.shields.io/npm/v/@reecem/prismic-sitemap)](https://www.npmjs.com/package/@reecem/prismic-sitemap)
-[![npm](https://img.shields.io/npm/d/@reecem/prismic-sitemap)](https://www.npmjs.com/package/@reecem/prismic-sitemap)
 [![npm](https://img.shields.io/npm/dt/@reecem/prismic-sitemap)](https://www.npmjs.com/package/@reecem/prismic-sitemap)
 
 A sitemap generator for Next.js websites based on the pages in your [Prismic.io](https://prismic.io) backed Next.js application.
