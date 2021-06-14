@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2021-06-14
+
+### Changed
+- Made the default `documentTypes` = `['*']` to allow all documents to fetched if none are defined.
+
+### Fixed
+- Missing access token for the API for Prismic, see #6
+
 ## [0.1.1] - 2021-03-22
 
 ### Fixed 
@@ -36,8 +44,9 @@ First kind of functional version of the package and it also has the ability to h
 - Initial File
 - Docs and such
 
-[Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.1.1...HEAD
-[0.1.1]: https://github.com/reecem/prismic-sitemap/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/reecem/prismic-sitemap/compare/v0.2.0...HEAD
+[0.1.1]: https://github.com/reecem/prismic-sitemap/tag/v0.1.0
 [0.1.0]: https://github.com/reecem/prismic-sitemap/tag/v0.1.0
 [0.0.2]: https://github.com/reecem/prismic-sitemap/tag/v0.0.2
 [0.0.1]: https://github.com/reecem/prismic-sitemap/tag/v0.0.1
