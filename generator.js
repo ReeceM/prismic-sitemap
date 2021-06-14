@@ -8,6 +8,7 @@ const { SitemapStream, streamToPromise } = require('sitemap');
  * @param {Object} sitemap The Sitemap Object
  * @param {Function} sitemap.linkResolver
  * @param {String} sitemap.apiEndpoint
+ * @param {String} sitemap.accessToken
  * @param {String} sitemap.hostname
  * @param {Array} sitemap.optionsMapPerDocumentType
  * @param {Array} sitemap.documentTypes
@@ -18,19 +19,25 @@ const generator = async (sitemap) => {
   const {
     linkResolver = null /* doc => { return something } */,
     apiEndpoint = '',
+    accessToken = null,
     hostname = '',
     optionsMapPerDocumentType = {},
-    documentTypes = [],
+    documentTypes = ['*'],
     fileName = 'sitemap.xml',
     publicPath = 'public',
     sitemapConfig
   } = sitemap;
 
   if (typeof linkResolver !== 'function') {
-    throw new Error('A linkResolver function is undefined, this is needed to build sitemap links');
+    throw new Error('The linkResolver function is undefined, this is needed to build sitemap links');
   }
 
-  const api = await Prismic.getApi(apiEndpoint);
+  if (accessToken !== null && accessToken.length <= 1) {
+    throw new Error('The API Access token appears incorrect, please double check as it is short.');
+  }
+
+  /** @todo Add extended options to the Prismic API function, or to pass one from user level */
+  const api = await Prismic.getApi(apiEndpoint, { 'accessToken': accessToken });
 
   const { results: docs } = await api.query(
     Prismic.Predicates.any('document.type', documentTypes),

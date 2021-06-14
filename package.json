@@ -1,6 +1,6 @@
 {
   "name": "@reecem/prismic-sitemap",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Sitemap Generator for Prismic and Next.js",
   "keywords": [
     "javascript",
