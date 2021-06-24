@@ -5,13 +5,15 @@
 [![npm](https://img.shields.io/npm/v/@reecem/prismic-sitemap)](https://www.npmjs.com/package/@reecem/prismic-sitemap)
 [![npm](https://img.shields.io/npm/dt/@reecem/prismic-sitemap)](https://www.npmjs.com/package/@reecem/prismic-sitemap)
 
-A sitemap generator for Next.js websites based on the pages in your [Prismic.io](https://prismic.io) backed Next.js application.
+An easy to configure sitemap generator for Next.js websites based on the pages in your [Prismic.io](https://prismic.io) CMS.
 
 ## About
 
-This package uses the [Sitemap.js](https://github.com/ekalinin/sitemap.js) package to generate the sitemaps as it handles all the needed stuff for sitemaps. This also gives the end user flexibility in generating the sitemap
+This package uses the [Sitemap.js](https://github.com/ekalinin/sitemap.js) package to generate the sitemaps as it handles all the needed stuff for sitemaps. This also gives the end user flexibility in generating the sitemap.
 
-This package is also inspired by the live steam from Prismic.io where they built a sitemap generator.
+It aims to simplify the configuration required to create the sitemap, and also include it in the build process of your Next.js site by extending the `next.config.js` file.
+
+> This package is also inspired by the live steam from Prismic.io where they built a sitemap generator. But wanting to make it better like.
 
 ## Installation
 
@@ -62,8 +64,16 @@ module.exports = withPrismicSitemap({
         apiEndpoint: API_ENDPOINT,
         hostname: SITE_URL,
         optionsMapPerDocumentType: {
-            post: { changefreq: "weekly", priority: 0.8 },
-            page: { changefreq: "monthly", priority: 1 }
+          // setting the update date of the article.
+          post: (document) => {
+            return { 
+              // get the last time the document was published in Prismic
+              lastmod: document.last_publication_date,
+              changefreq: "weekly", 
+              priority: 0.8 
+            }
+          }
+          page: { changefreq: "monthly", priority: 1 }
         },
         documentTypes: ['page', 'post']
     }
@@ -182,24 +192,61 @@ The sitemap object is made up of the following:
     accessToken = String|null,
     hostname = String,
     fileName = String,
-    optionsMapPerDocumentType = Object, /** @see https://github.com/ekalinin/sitemap.js/blob/master/api.md#sitemap-item-options */
+    optionsMapPerDocumentType = Object|Object<Function>,
+    defaultEntryOption = Object,
+    staticPaths = Array<Object>,
     documentTypes = Array,
-    sitemapConfig = Object /** @see https://github.com/ekalinin/sitemap.js#options-you-can-pass */
+    sitemapConfig = Object
   }
 }
 ```
 
 |Option|Type|eg|Description|
 |------|----|--|-----------|
-|linkResolver|function|`doc => {return `${doc.uid}`;}`| This is the Prismic.io link resolver, this could be custom, or used from the prismic-configuration files.|
+|linkResolver|function|```doc => {return `/path/${doc.uid}`;}```| This is the Prismic.io link resolver, this could be custom, or used from the prismic-configuration files.|
 |apiEndpoint|string|`'https://some-repository-on-prismic.cdn.prismic.io/api/v2'`| This is the URL of your Prismic repository, the API version of it.|
 |accessToken|string(optional)|`'random_api_string_that_you_get'`| This is the Access token used to access private Prismic Repositories|
 |hostname|string|`'http://example.com/'`| The hostname of your Vercel/Next.js application|
 |fileName|string|`'sitemap.xml'`| The name of the sitemap, it is always placed inside public|
-|optionsMapPerDocumentType|object|`{ page: { changefreq: "monthly", priority: 1 }, }`| The options for the documents that are indexed, this can also have other options, found at [https://github.com/ekalinin/sitemap.js/blob/master/api.md#sitemap-item-options](https://github.com/ekalinin/sitemap.js/blob/master/api.md#sitemap-item-options)|
+|optionsMapPerDocumentType|object|`{ page: { changefreq: "monthly", priority: 1 }, post: (doc) => {lastmod: doc.last_publication_date}}`| The options for the documents that are indexed, this can also have other options, found at [https://github.com/ekalinin/sitemap.js/blob/master/api.md#sitemap-item-options](https://github.com/ekalinin/sitemap.js/blob/master/api.md#sitemap-item-options)|
 |documentTypes|array|`['homepage', 'page', 'pricing', 'legal']`||
+|defaultEntryOption|object (optional)| `{ changefreq: "monthly", priority: 1, }`| This is the default to add when nothing exists for the type or callback for entries|
+|staticPaths|array|`[{ url: '/static/path', changefreq: "yearly", priority: 1, lastmod: '2000-01-01'}]`| Use this if you would like to define a custom path for the Sitemap that doesn't come from the CMS |
 |sitemapConfig|object|| see [https://github.com/ekalinin/sitemap.js#options-you-can-pass](https://github.com/ekalinin/sitemap.js#options-you-can-pass)|
 
+
+### `optionsMapPerDocumentType`
+
+The `optionsMapPerDocumentType` setting for the sitemap value allows you to configure the object result for the sitemap entry for the specific document
+
+This accepts a object with keys to the document type from Prismic, the value can be a object, or a callback.
+
+**Using the Callback**
+
+This option allows you to determine extra data about the document and return a object to be written to the Sitemap, there isn't a need to return the URL value, and this will be purged from the result anyway in favour of the `linkResolver` result. This is for consistency reasons.
+
+The primary reason to add this is because of using the `<lastmod>` XML attribute in the Sitemap to improve indexing by Google or other search engines.
+
+To make use of this, you can do the following logic:
+
+```javascript
+
+module.exports = withPrismicSitemap({
+  sitemap: {
+    // ... other cofing
+    optionsMapPerDocumentType: {
+      post: (document) => {
+        return {
+          lastmod: document.last_publication_date ? document.last_publication_date : (new Date()).toJSON(),
+          changefreq: 'monthly'
+        };
+      }
+    },
+  }
+})
+```
+
+---
 
 ## Testing
 

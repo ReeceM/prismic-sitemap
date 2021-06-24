@@ -9,8 +9,9 @@ currently being supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.2.x   | :white_check_mark: |
-| < 0.1   | :x:                |
+| 0.2.x   | ✅ |
+| alpha   | ❌ these are for testing |
+| < 0.1   | ❌                |
 
 ## Reporting a Vulnerability
 
@@ -35,6 +36,8 @@ Obviously, this being open-source, there wouldn't be any payment for discovering
 
 ### Public PGP Key
 
+<details>
+<summary>🔑 Show Key</summary>
 ```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: OpenPGP v2.0.8
@@ -113,3 +116,4 @@ WSP9/fPhYMd+HwxBDDUCc+taPQ==
 =dwpr
 -----END PGP PUBLIC KEY BLOCK-----
 ```
+</details>
