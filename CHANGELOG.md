@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+This is for version 0.3.0
+
+### Added
+- Option to make use of callback in `optionsMapPerDocumentType` see Discussion [Lastmod support #8](https://github.com/ReeceM/prismic-sitemap/discussions/8)
+- Added option to have a static path list of urls for normal routes that aren't dynamic
+
+### Changed
+- Made the URL result from the linkResolver take priority on results that go into the sitemap
+
 ## [0.2.0] - 2021-06-14
 
 ### Changed
