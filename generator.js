@@ -77,7 +77,9 @@ const generator = async (sitemap) => {
 
   /* Handle adding a list of static paths to the sitemap, must be an object */
   try {
-    staticPaths.length >= 1 ? staticPaths.forEach(path => storeIfValid({ ...path }, sitemapStream)) : null;
+    staticPaths.length >= 1
+      ? staticPaths.forEach(path => storeIfValid(path, sitemapStream))
+      : null;
   } catch (error) {
     console.error('[Sitemap Generator]: Unable to save staticPaths to sitemap')
   }
@@ -117,6 +119,7 @@ function resolveDocumentOption(option, document) {
     return typeof option === 'function'
       ? option(document)
       : option;
+
   } catch (error) {
     // console.error('[Sitemap Generator]: Failed to handle callback for a document', error);
 
@@ -135,9 +138,16 @@ function resolveDocumentOption(option, document) {
  * @returns void
  */
 function storeIfValid(option, stream) {
+
+  if (typeof option === 'function') {
+    option = option()
+  }
+
   if (option.url === undefined) {
     return;
   }
+
+  option.lastmod = option.lastmod ? option.lastmod : (new Date).toISOString()
 
   stream.write(option);
 }

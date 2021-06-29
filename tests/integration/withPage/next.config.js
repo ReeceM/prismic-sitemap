@@ -16,6 +16,15 @@ module.exports = withPrismicSitemap({
     apiEndpoint: process.env.TEST_REPOSITORY,
     hostname: 'https://example.com',
     documentTypes: ['post', 'page', 'latest_notice'],
+    staticPaths: [
+      { url: 'hello-to-me' },
+      function () {
+        return {
+          url: 'sup',
+          lastmod: '2000-02-02'
+        }
+      }
+    ],
     optionsMapPerDocumentType: {
       post: { changefreq: "weekly", priority: 0.8 },
       latest_notice: (doc) => {
