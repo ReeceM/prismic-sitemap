@@ -14,6 +14,7 @@ This is for version 0.3.0
 
 ### Changed
 - Made the URL result from the linkResolver take priority on results that go into the sitemap
+- The `sitemapConfig` option is using the `lastmodDateOnly = true` setting to ensure all lastmod dates are `YYYY-MM-DD` only. But can be disabled to keep UTC time.
 
 ## [0.2.0] - 2021-06-14
 
