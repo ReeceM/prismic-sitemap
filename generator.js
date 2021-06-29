@@ -28,7 +28,9 @@ const generator = async (sitemap) => {
     documentTypes = ['*'],
     fileName = 'sitemap.xml',
     publicPath = 'public',
-    sitemapConfig,
+    sitemapConfig = {
+      lastmodDateOnly: true,
+    },
     defaultEntryOption = { changefreq: "monthly", priority: 1, },
     staticPaths = [],
     /** optional things */
@@ -124,6 +126,14 @@ function resolveDocumentOption(option, document) {
   }
 }
 
+/**
+ * Adds the static path to the index
+ *
+ * @todo Make use of a async callback or handle the object depending on what happens
+ * @param {Object} option the static path to add
+ * @param {SitemapStream} stream
+ * @returns void
+ */
 function storeIfValid(option, stream) {
   if (option.url === undefined) {
     return;

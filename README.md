@@ -179,6 +179,22 @@ module.exports = withPrismicSitemap({
 })
 ```
 
+### `<lastmod>` support
+
+The package makes use of lastmod support for the sitemap, this would need to be set by the user if you would want the date to come through at the current version of `0.3.0`.
+
+Because the Sitemap file is written using a separate package, it supports parsing the date straight to the `YYYY-MM-DD` format, if you would like it to have the time as well, you will need to override the setting in the config:
+
+```javascript
+  sitemap: {
+
+    sitemapConfig: {
+      lastmodDateOnly: false,
+    },
+
+  }
+```
+
 ## API
 
 The sitemap object is made up of the following:
