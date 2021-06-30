@@ -9,6 +9,7 @@ currently being supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
+| 0.3.x   | ✅ |
 | 0.2.x   | ✅ |
 | alpha   | ❌ these are for testing |
 | < 0.1   | ❌                |
