@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-This is for version 0.3.0
+
+## [0.3.0] - 2021-06-30
 
 ### Added
 - Option to make use of callback in `optionsMapPerDocumentType` see Discussion [Lastmod support #8](https://github.com/ReeceM/prismic-sitemap/discussions/8)
@@ -54,8 +55,9 @@ First kind of functional version of the package and it also has the ability to h
 - Initial File
 - Docs and such
 
-[Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/reecem/prismic-sitemap/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/reecem/prismic-sitemap/compare/v0.3.0...HEAD
+[0.2.0]: https://github.com/reecem/prismic-sitemap/compare/v0.2.0
 [0.1.1]: https://github.com/reecem/prismic-sitemap/tag/v0.1.0
 [0.1.0]: https://github.com/reecem/prismic-sitemap/tag/v0.1.0
 [0.0.2]: https://github.com/reecem/prismic-sitemap/tag/v0.0.2
