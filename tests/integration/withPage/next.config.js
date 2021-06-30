@@ -17,7 +17,10 @@ module.exports = withPrismicSitemap({
     hostname: 'https://example.com',
     documentTypes: ['post', 'page', 'latest_notice'],
     staticPaths: [
-      { url: 'hello-to-me' },
+      {
+        url: 'hello-to-me',
+        lastmod: '2021-06-29'
+      },
       function () {
         return {
           url: 'sup',
