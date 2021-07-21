@@ -19,12 +19,9 @@ module.exports = (nextConfig) => ({
       }
 
       generator(sitemap);
-
-      return config;
     }
 
     if (typeof nextConfig.webpack === 'function') {
-
       return nextConfig.webpack(config, options)
     }
 
