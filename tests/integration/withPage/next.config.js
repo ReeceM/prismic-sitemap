@@ -38,6 +38,12 @@ module.exports = withPrismicSitemap({
         }
       }
     },
-  }
+  },
+
+  // custom webpack to ensure it returns alright
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    console.log('Custom Webpack Triggered');
+    return config
+  },
 })
 

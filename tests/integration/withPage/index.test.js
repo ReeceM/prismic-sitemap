@@ -1,5 +1,4 @@
 const {
-  nextServer,
   nextBuild,
   startApp,
   renderViaHTTP
