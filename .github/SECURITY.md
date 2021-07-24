@@ -39,7 +39,8 @@ Obviously, this being open-source, there wouldn't be any payment for discovering
 
 <details>
 <summary>🔑 Show Key</summary>
-```
+  <pre>
+<code>
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: OpenPGP v2.0.8
 Comment: https://sela.io/pgp/
@@ -116,5 +117,6 @@ sBJkv5/6RbNqvbTFnMDEct95FiqE2kWAZrHHP8ueN9Io3IzyUbkpWlJE/h9Mzq7T
 WSP9/fPhYMd+HwxBDDUCc+taPQ==
 =dwpr
 -----END PGP PUBLIC KEY BLOCK-----
-```
+  </code>
+ </pre>
 </details>
