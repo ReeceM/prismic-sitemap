@@ -211,6 +211,9 @@ The sitemap object is made up of the following:
     optionsMapPerDocumentType = Object|Object<Function>,
     defaultEntryOption = Object,
     staticPaths = Array<Object>,
+    pagination = {
+      pageSize: Number,
+    },
     documentTypes = Array,
     sitemapConfig = Object
   }
@@ -228,6 +231,7 @@ The sitemap object is made up of the following:
 |documentTypes|array|`['homepage', 'page', 'pricing', 'legal']`||
 |defaultEntryOption|object (optional)| `{ changefreq: "monthly", priority: 1, }`| This is the default to add when nothing exists for the type or callback for entries|
 |staticPaths|array|`[{ url: '/static/path', changefreq: "yearly", priority: 1, lastmod: '2000-01-01'}]`| Use this if you would like to define a custom path for the Sitemap that doesn't come from the CMS |
+|pagination.pageSize|number|`{pagination: {pageSize: 30}}`|This sets the number of pages per request on the automatic pagination. Defaults to 20 per request|
 |sitemapConfig|object|| see [https://github.com/ekalinin/sitemap.js#options-you-can-pass](https://github.com/ekalinin/sitemap.js#options-you-can-pass)|
 
 
