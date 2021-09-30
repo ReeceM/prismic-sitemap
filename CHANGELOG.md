@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2021-07-24
+
+### Feature
+- Added automatic pagination for all document types defined, or all that are returned.
+  - this can also be configured with a pageSize per query if you wish to control that.
+
 ## [0.3.1] - 2021-07-24
 
 ### Fixed
@@ -60,7 +66,8 @@ First kind of functional version of the package and it also has the ability to h
 - Docs and such
 
 [Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.3.1...HEAD
-[0.3.1]: https://github.com/reecem/prismic-sitemap/compare/v0.3.1...HEAD
+[0.4.0]: https://github.com/reecem/prismic-sitemap/compare/v0.4.0...HEAD
+[0.3.1]: https://github.com/reecem/prismic-sitemap/compare/v0.3.1...v0.4.0
 [0.3.0]: https://github.com/reecem/prismic-sitemap/compare/v0.3.0...v0.3.1
 [0.2.0]: https://github.com/reecem/prismic-sitemap/compare/v0.2.0
 [0.1.1]: https://github.com/reecem/prismic-sitemap/tag/v0.1.0
