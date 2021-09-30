@@ -26,13 +26,13 @@ const paginator = {
         }
     );
 
-    results.push(...results);
+    this.results.push(...results);
 
     if (total_pages > this.nextPage) {
       return this.paginate(type, page + 1)
     }
 
-    return Promise.resolve(this.results);
+    return Promise.resolve();
   }
 }
 

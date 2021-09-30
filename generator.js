@@ -65,26 +65,17 @@ const generator = async (sitemap) => {
   const paginator = paginatorUtil.init(api, pagination);
 
   let documents = [];
+  let types = Array.isArray(documentTypes) ? documentTypes : Array.of(documentTypes)
 
-  if (documentTypes.length === 1) {
-    const { results: docs } = await api.query(
-      Prismic.Predicates.any('document.type', documentTypes),
-      {
-        lang: "*",
-        pageSize: pagination.pageSize,
-      });
+  await Promise.all(types.flatMap(type => paginator.paginate(type)))
 
-    documents = docs;
-  } else {
-    console.log(documents)
-  }
+  documents = paginator.results;
 
   const sitemapStream = new SitemapStream({ hostname: hostname, ...sitemapConfig });
 
   documents
     .sort((a, b) => a.type < b.type ? -1 : 1) // sort by type
     .forEach(doc => {
-
 
       const options = optionsMapPerDocumentType.hasOwnProperty(doc.type)
         ? resolveDocumentOption(optionsMapPerDocumentType[doc.type], doc)
