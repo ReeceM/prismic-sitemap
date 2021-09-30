@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const Prismic = require("prismic-javascript");
 const { SitemapStream, streamToPromise } = require('sitemap');
+const paginatorUtil = require('./utils/paginator')
 
 /**
  * Generates a sitemap
@@ -26,6 +27,9 @@ const generator = async (sitemap) => {
     hostname = '',
     optionsMapPerDocumentType = {},
     documentTypes = ['*'],
+    pagination = {
+      pageSize: 20,
+    },
     fileName = 'sitemap.xml',
     publicPath = 'public',
     sitemapConfig = {
@@ -50,18 +54,34 @@ const generator = async (sitemap) => {
     );
   }
 
-  /** @todo Add extended options to the Prismic API function, or to pass one from user level */
-  const api = await Prismic.getApi(apiEndpoint, { 'accessToken': accessToken });
+  if (documentTypes === null || documentTypes.length <= 0) {
+    throw new Error(
+      '[Sitemap Generator]: The documentTypes option needs a value of 1 or greater in the array'
+    );
+  }
 
-  const { results: docs } = await api.query(
-    Prismic.Predicates.any('document.type', documentTypes),
-    {
-      lang: "*"
-    });
+  /** @todo Add extended options to the Prismic API function, or to pass one from user level */
+  const api = await Prismic.getApi(apiEndpoint, { 'accessToken': accessToken, });
+  const paginator = paginatorUtil.init(api, pagination);
+
+  let documents = [];
+
+  if (documentTypes.length === 1) {
+    const { results: docs } = await api.query(
+      Prismic.Predicates.any('document.type', documentTypes),
+      {
+        lang: "*",
+        pageSize: pagination.pageSize,
+      });
+
+    documents = docs;
+  } else {
+    console.log(documents)
+  }
 
   const sitemapStream = new SitemapStream({ hostname: hostname, ...sitemapConfig });
 
-  docs
+  documents
     .sort((a, b) => a.type < b.type ? -1 : 1) // sort by type
     .forEach(doc => {
 
@@ -151,6 +171,5 @@ function storeIfValid(option, stream) {
 
   stream.write(option);
 }
-
 
 module.exports = generator;
