@@ -28,7 +28,7 @@ const sitemapConfig = {
     post: { changefreq: "weekly", priority: 0.8 },
     latest_notice: (doc) => {
       return {
-        lastmod: doc.last_publication_date ? doc.last_publication_date : (new Date()).toJSON(),
+        lastmod: doc.last_publication_date ? doc.last_publication_date : "2020-07-16",
         changefreq: "weekly",
         priority: 0.8
       }
@@ -55,7 +55,7 @@ describe('tests for generator.js', () => {
       .toHaveBeenCalledTimes(1);
   });
 
-  it('file write should have been called with ...', () => {
+  it('file write should have been called with sitemapData Buffer', () => {
 
     expect(jest.spyOn(fs, 'writeFileSync')).toHaveBeenCalledWith(
       path.join(__dirname, "../public/sitemap.xml"),
@@ -71,6 +71,27 @@ describe('tests for generator.js', () => {
   //   expect(file.toLocaleString())
   //     .toEqual(expect.stringMatching(/<lastmod>.*<\/lastmod>/g))
   // })
+});
+
+
+describe('Pagination Tests', () => {
+  it('file write should have been called with sitemapData Buffer', async () => {
+
+    const paginationConfig = {
+      pagination: {
+        pageSize: 5,
+      }, ...sitemapConfig
+    };
+
+    jest.restoreAllMocks();
+    await generator(paginationConfig);
+
+    expect(jest.spyOn(fs, 'writeFileSync')).toHaveBeenCalledWith(
+      path.join(__dirname, "../public/sitemap.xml"),
+      require('./buffer-example'),
+      "utf-8"
+    );
+  });
 });
 
 describe('generator errors', () => {
