@@ -7,7 +7,7 @@ const paginator = {
   /**
    *
    * @param {Prismic} api prismic client
-   * @param {Object} options {pageSize, auto}
+   * @param {Object} options {pageSize}
    */
   init(api, options = {}) {
     this.api = api;
@@ -16,19 +16,27 @@ const paginator = {
     return this;
   },
 
+  /**
+   * This paginates automatically over the document list from Prismic
+   * @todo Add Lang support for scoping to a selection of languages.
+   *
+   * @param {String} type The Document type
+   * @param {Number} next The Next Page type
+   * @returns Promise
+   */
   async paginate(type, next = null) {
     const { results, total_pages, page } = await this.api.query(
       Prismic.Predicates.at("document.type", type),
-        {
-          lang: "*",
-          pageSize: this.pageSize,
-          page: next
-        }
+      {
+        lang: "*",
+        pageSize: this.pageSize,
+        page: next
+      }
     );
 
     this.results.push(...results);
 
-    if (total_pages > this.nextPage) {
+    if (total_pages !== page) {
       return this.paginate(type, page + 1)
     }
 
