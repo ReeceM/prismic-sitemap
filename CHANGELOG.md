@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.4.3] - 2022-07-28
+### Fixed
+- Error where sometimes in NextJS duplicate entries were saved in the sitemap.
+
 ## [0.4.0] - 2021-07-24
 
 ### Feature
@@ -66,7 +71,10 @@ First kind of functional version of the package and it also has the ability to h
 - Docs and such
 
 [Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.3.1...HEAD
-[0.4.0]: https://github.com/reecem/prismic-sitemap/compare/v0.4.0...HEAD
+[0.4.3]: https://github.com/reecem/prismic-sitemap/compare/v0.4.3...HEAD
+[0.4.2]: https://github.com/reecem/prismic-sitemap/compare/v0.4.2...v0.4.3
+[0.4.1]: https://github.com/reecem/prismic-sitemap/compare/v0.4.1...v0.4.2
+[0.4.0]: https://github.com/reecem/prismic-sitemap/compare/v0.4.0...v0.4.1
 [0.3.1]: https://github.com/reecem/prismic-sitemap/compare/v0.3.1...v0.4.0
 [0.3.0]: https://github.com/reecem/prismic-sitemap/compare/v0.3.0...v0.3.1
 [0.2.0]: https://github.com/reecem/prismic-sitemap/compare/v0.2.0

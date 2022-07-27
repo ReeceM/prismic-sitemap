@@ -1,6 +1,8 @@
 const generator = require('./generator');
 const path = require('path');
 
+let isRunning = false;
+
 module.exports = (nextConfig) => ({
   ...nextConfig,
   webpack(config, options) {
@@ -11,8 +13,10 @@ module.exports = (nextConfig) => ({
     } = options;
 
 
-    if (isServer) {
+    if (isServer && isRunning == false) {
       console.log('[Sitemap Generator]: Generating Sitemap');
+
+      isRunning = true;
 
       if (typeof sitemap.publicPath === 'undefined') {
         sitemap.publicPath = path.join(options.dir, 'public');
