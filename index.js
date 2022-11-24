@@ -1,34 +1,34 @@
+'use strict'
+
 const generator = require('./generator');
 const path = require('path');
 
 let isRunning = false;
 
-module.exports = (nextConfig) => ({
-  ...nextConfig,
-  webpack(config, options) {
+module.exports =
+  (sitemapOptions = {}) =>
+    (nextConfig) => Object.assign({}, nextConfig, {
+      webpack(config, options) {
 
-    const {
-      isServer,
-      config: { sitemap = {} }
-    } = options;
+        const { isServer, buildId, webpack } = options;
 
 
-    if (isServer && isRunning == false) {
-      console.log('[Sitemap Generator]: Generating Sitemap');
+        if (isServer && isRunning == false) {
+          console.log('[Sitemap Generator]: Generating Sitemap');
 
-      isRunning = true;
+          isRunning = true;
 
-      if (typeof sitemap.publicPath === 'undefined') {
-        sitemap.publicPath = path.join(options.dir, 'public');
+          if (typeof sitemap.publicPath === 'undefined') {
+            sitemap.publicPath = path.join(options.dir, 'public');
+          }
+
+          generator(sitemap);
+        }
+
+        if (typeof nextConfig.webpack === 'function') {
+          return nextConfig.webpack(config, options)
+        }
+
+        return config;
       }
-
-      generator(sitemap);
-    }
-
-    if (typeof nextConfig.webpack === 'function') {
-      return nextConfig.webpack(config, options)
-    }
-
-    return config;
-  }
-})
+    })
