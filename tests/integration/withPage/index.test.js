@@ -4,34 +4,19 @@ const {
   renderViaHTTP
 } = require('../next-test-utils');
 
-const appDir = __dirname;
-let appPort;
-let server;
-let app;
-
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
-
-beforeAll(async () => {
-  jest.resetModules();
-  await nextBuild(appDir);
-
-  server = await startApp({
-    dir: appDir,
-    dev: false,
-    quiet: true
-  });
-
-  appPort = server.address().port;
-});
-
-afterAll(() => server ? server.close() : null);
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 80;
 
 describe('Using Sitemap Generator', () => {
-  describe('visiting page', () => {
-    it('loads sitemap.xml', async () => {
-      const html = await renderViaHTTP(appPort, '/sitemap.xml');
-      expect(html).toContain('xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"');
-      expect(html).toMatchSnapshot();
-    });
+  it('loads sitemap.xml', async () => {
+    await nextBuild(__dirname);
+
+    await startApp(__dirname, ['-p', '44343'], { stdout: true, stderr: true })
+
+    const html = await renderViaHTTP(44343, '/sitemap.xml');
+
+    expect(html).toContain('xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"');
+
+    expect(html).toMatchSnapshot();
+
   });
 });

@@ -28,21 +28,12 @@ function promiseCall(obj, method, ...args) {
 
 module.exports = { nextServer };
 
-module.exports.startApp = async function startApp(options) {
-  const app = nextServer(options);
-
-  await app.prepare();
-
-  const handler = app.getRequestHandler();
-  const server = http.createServer(handler);
-
-  server.__app = app;
-
-  port = server.address().port
-
-  await promiseCall(server, 'listen');
-
-  return server;
+module.exports.startApp = async function startApp(
+  dir,
+  args = [],
+  opts = {}
+) {
+  return runNextCommand(['start', dir, ...args], opts);
 }
 
 module.exports.stopApp =  async function stopApp(server) {
@@ -59,7 +50,7 @@ function runNextCommand(
   const nextDir = path.dirname(require.resolve('next/package'));
   const nextBin = path.join(nextDir, 'dist/bin/next');
   const cwd = nextDir;
-  const env = { ...process.env, ...options.env, NODE_ENV: '' };
+  const env = { ...process.env, ...options, NODE_ENV: '' };
 
   return new Promise((resolve, reject) => {
     // console.log(`Running command "next ${args.join(' ')}"`);
