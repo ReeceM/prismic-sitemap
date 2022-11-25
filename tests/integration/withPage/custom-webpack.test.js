@@ -4,7 +4,7 @@ const {
 
 const appDir = __dirname;
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 80;
 
 beforeAll(async () => {
   jest.resetModules();
@@ -13,6 +13,8 @@ beforeAll(async () => {
 describe('Using a custom webpack config', () => {
   it('triggers custom webpack functions', async () => {
     const { stdout, stderr } = await nextBuild(appDir, [], { stdout: true, stderr: true })
+
     expect(stdout).toContain('Custom Webpack Triggered')
+
   });
 });

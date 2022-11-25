@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2022-11-24
+
+### Changes
+- The config usage option has changed, it must be done within the config area
+
+### Fixed
+- Fixes issue [#18](https://github.com/ReeceM/prismic-sitemap/issues/18)
 
 ## [0.4.3] - 2022-07-28
 ### Fixed

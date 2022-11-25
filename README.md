@@ -39,7 +39,6 @@ It works in a similar way to most Next.js plugins, it will also call the top-lev
 A basic Next.js file that has the sitemap generator plugin running would like as follows:
 
 ```javascript
-const withPrismicSitemap = require('@reecem/prismic-sitemap')
 
 // The Prismic API endpoint
 const API_ENDPOINT = `https://${process.env.REPOSITORY_NAME}.cdn.prismic.io/api/v2`;
@@ -57,26 +56,26 @@ const linkResolver = doc => {
   return `${doc.uid}`;
 };
 
-module.exports = withPrismicSitemap({
-    // the sitemap object is picked up by the package.
-    sitemap: {
-        linkResolver: linkResolver,
-        apiEndpoint: API_ENDPOINT,
-        hostname: SITE_URL,
-        optionsMapPerDocumentType: {
-          // setting the update date of the article.
-          post: (document) => {
-            return { 
-              // get the last time the document was published in Prismic
-              lastmod: document.last_publication_date,
-              changefreq: "weekly", 
-              priority: 0.8 
-            }
-          }
-          page: { changefreq: "monthly", priority: 1 }
-        },
-        documentTypes: ['page', 'post']
+const withPrismicSitemap = require('@reecem/prismic-sitemap')({
+  linkResolver: linkResolver,
+  apiEndpoint: API_ENDPOINT,
+  hostname: SITE_URL,
+  optionsMapPerDocumentType: {
+    // setting the update date of the article.
+    post: (document) => {
+      return { 
+        // get the last time the document was published in Prismic
+        lastmod: document.last_publication_date,
+        changefreq: "weekly", 
+        priority: 0.8 
+      }
     }
+    page: { changefreq: "monthly", priority: 1 }
+  },
+  documentTypes: ['page', 'post']
+});
+
+module.exports = withPrismicSitemap({
     ... other nextConfig things here... or before :)
 })
 ```
@@ -87,8 +86,6 @@ A more complex example would be to have multiple page types and also multi-langu
 This one will use a linkResolver that picks if it should use the default local pattern or the localized version and sets that as a prefix.
 
 ```javascript
-const withPrismicSitemap = require('@reecem/prismic-sitemap')
-
 // The Prismic API endpoint
 const API_ENDPOINT = `https://${process.env.REPOSITORY_NAME}.cdn.prismic.io/api/v2`;
 
@@ -118,21 +115,21 @@ const linkResolver = doc => {
   }
 };
 
+const withPrismicSitemap = require('@reecem/prismic-sitemap')({
+    linkResolver: linkResolver,
+    apiEndpoint: API_ENDPOINT,
+    hostname: SITE_URL,
+    optionsMapPerDocumentType: {
+      page: { changefreq: "monthly", priority: 1 },
+      // homepage: { changefreq: "monthly", priority: 1 }, Homepage would default to this as it isn't found
+      // legal: { changefreq: "monthly", priority: 1 }, Legal types would default to this as it isn't found
+      post: { changefreq: "weekly", priority: 0.8 },
+      pricing: { changefreq: "monthly", priority: 1 }
+    },
+  documentTypes: ['homepage', 'page', 'pricing', 'legal']
+})
+
 module.exports = withPrismicSitemap({
-    // the sitemap object is picked up by the package.
-    sitemap: {
-        linkResolver: linkResolver,
-        apiEndpoint: API_ENDPOINT,
-        hostname: SITE_URL,
-        optionsMapPerDocumentType: {
-          page: { changefreq: "monthly", priority: 1 },
-          // homepage: { changefreq: "monthly", priority: 1 }, Homepage would default to this as it isn't found
-          // legal: { changefreq: "monthly", priority: 1 }, Legal types would default to this as it isn't found
-          post: { changefreq: "weekly", priority: 0.8 },
-          pricing: { changefreq: "monthly", priority: 1 }
-        },
-      documentTypes: ['homepage', 'page', 'pricing', 'legal']
-    }
     ... other nextConfig things here... or before :)
 })
 ```
@@ -144,7 +141,6 @@ If you are using a closed or private prismic repository, you may need to use the
 Below is an example, you need to add the `sitemap.accessToken` to the config.
 
 ```javascript
-const withPrismicSitemap = require('@reecem/prismic-sitemap')
 
 // The Prismic API endpoint
 const API_ENDPOINT = `https://${process.env.REPOSITORY_NAME}.cdn.prismic.io/api/v2`;
@@ -162,20 +158,20 @@ const linkResolver = doc => {
   return `${doc.uid}`;
 };
 
+const withPrismicSitemap = require('@reecem/prismic-sitemap')(sitemap: {
+  linkResolver: linkResolver,
+  apiEndpoint: API_ENDPOINT,
+  accessToken: process.env.PRISMIC_ACCESS_TOKEN,
+  hostname: SITE_URL,
+  optionsMapPerDocumentType: {
+      post: { changefreq: "weekly", priority: 0.8 },
+      page: { changefreq: "monthly", priority: 1 }
+  },
+  documentTypes: ['page', 'post']
+})
+
 module.exports = withPrismicSitemap({
-    // the sitemap object is picked up by the package.
-    sitemap: {
-        linkResolver: linkResolver,
-        apiEndpoint: API_ENDPOINT,
-        accessToken: process.env.PRISMIC_ACCESS_TOKEN,
-        hostname: SITE_URL,
-        optionsMapPerDocumentType: {
-            post: { changefreq: "weekly", priority: 0.8 },
-            page: { changefreq: "monthly", priority: 1 }
-        },
-        documentTypes: ['page', 'post']
-    }
-    ... other nextConfig things here... or before :)
+    ... other nextConfig things here..
 })
 ```
 
@@ -250,8 +246,7 @@ The primary reason to add this is because of using the `<lastmod>` XML attribute
 To make use of this, you can do the following logic:
 
 ```javascript
-
-module.exports = withPrismicSitemap({
+const withPrismicSitemap = require('@reecem/prismic-sitemap')({
   sitemap: {
     // ... other cofing
     optionsMapPerDocumentType: {

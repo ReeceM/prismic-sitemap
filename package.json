@@ -1,6 +1,6 @@
 {
   "name": "@reecem/prismic-sitemap",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "Sitemap Generator for Prismic and Next.js with Minimal Configuration",
   "keywords": [
     "javascript",
@@ -20,14 +20,14 @@
   "devDependencies": {
     "cross-spawn": "^7.0.3",
     "jest": "^26.6.3",
-    "next": "^10.0.9",
+    "next": "^13.0.5",
     "node-fetch": "^2.6.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "scripts": {
     "sitemap": "node ./index.js",
-    "test": "TEST_REPOSITORY=https://hbar.cdn.prismic.io/api/v2 jest"
+    "test": "PORT=4000 TEST_REPOSITORY=https://hbar.cdn.prismic.io/api/v2 jest"
   },
   "engines": {
     "node": ">=12.0"

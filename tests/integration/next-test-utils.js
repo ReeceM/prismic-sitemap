@@ -2,11 +2,12 @@
 // Based on https://github.com/lfades/next-with-apollo/blob/master/integration/next-test-utils.ts
 
 let path = require('path');
-let http = require('http');
+let { createServer } = require('http');
 let spawn = require('cross-spawn');
 let nextServer = require('next');
 let fetch = require('node-fetch');
 
+let port;
 /**
  * These utils are very similar to the ones used by Next.js in their tests
  */
@@ -28,14 +29,21 @@ function promiseCall(obj, method, ...args) {
 module.exports = { nextServer };
 
 module.exports.startApp = async function startApp(options) {
-  const app = nextServer(options);
+  const app = nextServer(Object.assign({
+    port: 3000,
+    hostname: 'localhost',
+    customServer: true,
+  }, options));
 
-  await app.prepare();
+  process.env.NODE_ENV = "production";
+
+  app.prepare();
 
   const handler = app.getRequestHandler();
-  const server = http.createServer(handler);
+  const server = createServer(handler);
 
   server.__app = app;
+  port = server.address().port
 
   await promiseCall(server, 'listen');
 
@@ -52,11 +60,12 @@ module.exports.stopApp =  async function stopApp(server) {
 function runNextCommand(
   args = [],
   options,
+  actions = () => {}
 ) {
   const nextDir = path.dirname(require.resolve('next/package'));
   const nextBin = path.join(nextDir, 'dist/bin/next');
   const cwd = nextDir;
-  const env = { ...process.env, ...options.env, NODE_ENV: '' };
+  const env = { ...process.env, ...options.env, NODE_ENV: 'production' };
 
   return new Promise((resolve, reject) => {
     // console.log(`Running command "next ${args.join(' ')}"`);
@@ -75,7 +84,7 @@ function runNextCommand(
 
     let stdoutOutput = '';
     if (options.stdout) {
-      instance.stdout.on('data', function(chunk) {
+      instance.stdout.on('data', function (chunk) {
         stdoutOutput += chunk;
       });
     }
@@ -92,6 +101,15 @@ function runNextCommand(
       err.stderr = stderrOutput;
       reject(err);
     });
+
+    instance.on('exit', () => {
+      resolve({
+        stdout: stdoutOutput,
+        stderr: stderrOutput
+      });
+    });
+
+    instance.on('spawn', () => actions(instance));
   });
 }
 
@@ -114,7 +132,7 @@ module.exports.nextExport =  function nextExport(
 }
 
 function fetchViaHTTP(
-  appPort,
+  appPort = port,
   pathname,
   opts = {}
 ) {

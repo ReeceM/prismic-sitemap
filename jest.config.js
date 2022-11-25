@@ -1,11 +1,12 @@
 /*
- * For a detailed explanation regarding each configuration property, visit:
- * https://jestjs.io/docs/en/configuration.html
- */
-
+* For a detailed explanation regarding each configuration property, visit:
+* https://jestjs.io/docs/en/configuration.html
+*/
 module.exports = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
+
+  rootDir: './',
 
   // Stop running tests after `n` failures
   bail: true,
@@ -28,7 +29,7 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    "**/__tests__/**/*.[jt]s?(x)",
+    "**/__tests__/**/?(*.)+(spec|test).[tj]s?(x)",
     "**/?(*.)+(spec|test).[tj]s?(x)"
   ],
 };
