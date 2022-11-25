@@ -6,29 +6,29 @@ const path = require('path');
 let isRunning = false;
 
 module.exports =
-  (sitemapOptions = {}) =>
-    (nextConfig) => Object.assign({}, nextConfig, {
-      webpack(config, options) {
+  (sitemap = {}) =>
+    (nextConfig = {}) =>
+      Object.assign({}, nextConfig, {
+        webpack(config, options) {
+          const { isServer, buildId, webpack } = options;
 
-        const { isServer, buildId, webpack } = options;
-
-
-        if (isServer && isRunning == false) {
-          console.log('[Sitemap Generator]: Generating Sitemap');
-
-          isRunning = true;
-
-          if (typeof sitemap.publicPath === 'undefined') {
-            sitemap.publicPath = path.join(options.dir, 'public');
+          if (typeof nextConfig.webpack === 'function') {
+            config = nextConfig.webpack(config, options)
           }
 
-          generator(sitemap);
-        }
+          if (isServer && isRunning == false) {
+            isRunning = true;
 
-        if (typeof nextConfig.webpack === 'function') {
-          return nextConfig.webpack(config, options)
-        }
+            console.log('[Sitemap Generator]: Generating Sitemap');
 
-        return config;
-      }
-    })
+            if (typeof sitemap.publicPath === 'undefined') {
+              sitemap.publicPath = path.join(options.dir, 'public');
+            }
+
+            generator(sitemap);
+          }
+
+
+          return config;
+        }
+      })
