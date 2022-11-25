@@ -89,8 +89,6 @@ function runNextCommand(
       });
     }
 
-    instance.on('spawn', () => actions(instance));
-
     instance.on('close', () => {
       resolve({
         stdout: stdoutOutput,
@@ -103,6 +101,15 @@ function runNextCommand(
       err.stderr = stderrOutput;
       reject(err);
     });
+
+    instance.on('exit', () => {
+      resolve({
+        stdout: stdoutOutput,
+        stderr: stderrOutput
+      });
+    });
+
+    instance.on('spawn', () => actions(instance));
   });
 }
 
