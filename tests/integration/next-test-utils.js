@@ -2,7 +2,7 @@
 // Based on https://github.com/lfades/next-with-apollo/blob/master/integration/next-test-utils.ts
 
 let path = require('path');
-let http = require('http');
+let { createServer } = require('http');
 let spawn = require('cross-spawn');
 let nextServer = require('next');
 let fetch = require('node-fetch');
@@ -28,12 +28,26 @@ function promiseCall(obj, method, ...args) {
 
 module.exports = { nextServer };
 
-module.exports.startApp = async function startApp(
-  dir,
-  args = [],
-  opts = {}
-) {
-  return runNextCommand(['start', dir, ...args], opts);
+module.exports.startApp = async function startApp(options) {
+  const app = nextServer(Object.assign({
+    port: 3000,
+    hostname: 'localhost',
+    customServer: true,
+  }, options));
+
+  process.env.NODE_ENV = "production";
+
+  app.prepare();
+
+  const handler = app.getRequestHandler();
+  const server = createServer(handler);
+
+  server.__app = app;
+  port = server.address().port
+
+  await promiseCall(server, 'listen');
+
+  return server;
 }
 
 module.exports.stopApp =  async function stopApp(server) {
@@ -46,11 +60,12 @@ module.exports.stopApp =  async function stopApp(server) {
 function runNextCommand(
   args = [],
   options,
+  actions = () => {}
 ) {
   const nextDir = path.dirname(require.resolve('next/package'));
   const nextBin = path.join(nextDir, 'dist/bin/next');
   const cwd = nextDir;
-  const env = { ...process.env, ...options, NODE_ENV: '' };
+  const env = { ...process.env, ...options.env, NODE_ENV: 'production' };
 
   return new Promise((resolve, reject) => {
     // console.log(`Running command "next ${args.join(' ')}"`);
@@ -69,10 +84,12 @@ function runNextCommand(
 
     let stdoutOutput = '';
     if (options.stdout) {
-      instance.stdout.on('data', function(chunk) {
+      instance.stdout.on('data', function (chunk) {
         stdoutOutput += chunk;
       });
     }
+
+    instance.on('spawn', () => actions(instance));
 
     instance.on('close', () => {
       resolve({

@@ -12,7 +12,7 @@ module.exports =
         webpack(config, options) {
           const { isServer, buildId, webpack } = options;
 
-          if (typeof nextConfig.webpack === 'function') {
+          if (typeof nextConfig.webpack === 'function' && isRunning == false) {
             config = nextConfig.webpack(config, options)
           }
 
