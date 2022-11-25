@@ -7,6 +7,7 @@ let spawn = require('cross-spawn');
 let nextServer = require('next');
 let fetch = require('node-fetch');
 
+let port;
 /**
  * These utils are very similar to the ones used by Next.js in their tests
  */
@@ -36,6 +37,8 @@ module.exports.startApp = async function startApp(options) {
   const server = http.createServer(handler);
 
   server.__app = app;
+
+  port = server.address().port
 
   await promiseCall(server, 'listen');
 
@@ -114,7 +117,7 @@ module.exports.nextExport =  function nextExport(
 }
 
 function fetchViaHTTP(
-  appPort,
+  appPort = port,
   pathname,
   opts = {}
 ) {
