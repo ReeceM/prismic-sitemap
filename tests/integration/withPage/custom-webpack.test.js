@@ -4,7 +4,7 @@ const {
 
 const appDir = __dirname;
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 80;
 
 beforeAll(async () => {
   jest.resetModules();

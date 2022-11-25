@@ -4,7 +4,7 @@ const {
   renderViaHTTP
 } = require('../next-test-utils');
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 80;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 100;
 
 describe('Using Sitemap Generator', () => {
   it('loads sitemap.xml', async () => {
