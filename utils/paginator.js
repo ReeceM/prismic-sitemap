@@ -34,6 +34,10 @@ const paginator = {
       }
     );
 
+    if (results.length <= 0) {
+      return Promise.resolve();
+    }
+    
     this.results.push(...results);
 
     if (total_pages !== page) {
