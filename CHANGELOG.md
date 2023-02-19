@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.3] - 2022-02-19
+
+* Publish again as version error
+
+## [0.5.2] - 2022-02-19
+
+### Changes
+* Update paginator.js by @ReeceM in https://github.com/ReeceM/prismic-sitemap/pull/22
+
 ## [0.5.1] - 2022-11-25
 
 ### Fixed
@@ -82,7 +91,9 @@ First kind of functional version of the package and it also has the ability to h
 - Initial File
 - Docs and such
 
-[Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/reecem/prismic-sitemap/compare/v0.5.3...HEAD
+[0.5.3]: https://github.com/ReeceM/prismic-sitemap/compare/v0.5.2...v0.5.3
+[0.5.2]: https://github.com/ReeceM/prismic-sitemap/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/reecem/prismic-sitemap/compare/v0.5.1...HEAD
 [0.5.0]: https://github.com/reecem/prismic-sitemap/compare/v0.5.0...v0.5.1
 [0.4.3]: https://github.com/reecem/prismic-sitemap/compare/v0.4.3...v0.5.0
